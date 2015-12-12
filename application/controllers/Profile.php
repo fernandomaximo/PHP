@@ -4,13 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Profile extends CI_Controller {
 
-    public function index() {
-        $data['paragrafo'] = 'index do profile';
+    //public function index() {
+        //$data['paragrafo'] = 'index do profile';
+        
+        
 
-        $this->load->view('template/_header');
-        $this->load->view('profile/index', $data);
-        $this->load->view('template/_footer');
-    }
+        //$this->load->view('template/_header');
+        //$this->load->view('profile/index', $data);
+        //$this->load->view('template/_footer');
+    //}
 
     public function view($username) {
         $this->load->database();
@@ -54,15 +56,19 @@ class Profile extends CI_Controller {
     
     public function update(){
         session_start();
-        if (!isset($_SESSION['userbame']))
+        if (!isset($_SESSION['username']))
             redirect ('main/index');
             
-        $this->user->findByUsername($_SESSION['username']);
+     $this->user->findByUsername($_SESSION['username']);
         
-        $this->user->setUsername($this->input->post('username'));
-        $this->user->setPassword($this->input->post('password'));
-        $this->user->setEmail($this->input->post('email'));
-        $this->user->setAbout($this->input->post('about'));
+      
+        
+        
+        $this->load->view('template/_header');
+        $this->load->view('profile/update');
+        $this->load->view('template/_footer');
+        
+        
         
     }
 
@@ -74,7 +80,7 @@ class Profile extends CI_Controller {
             redirect('main/index');
 
         $this->user->findByUsername($_SESSION['username']);
-
+        $this->user->setId($this->input->post('id'));
         $this->user->setUsername($this->input->post('username'));
         $this->user->setPassword($this->input->post('password'));
         $this->user->setEmail($this->input->post('email'));
@@ -84,10 +90,23 @@ class Profile extends CI_Controller {
 
         $_SESSION['username'] = $this->input->post('username');
 
-        redirect('profile/show' . $this->user->getUserName());
+        redirect('profile/show/' . $this->user->getUserName());
 
         $this->load->view('template/_header');
         $this->load->view('profile/update');
+        $this->load->view('template/_footer');
+    }
+    
+    public function index(){
+        session_start();
+        
+        if(!isset($_SESSION['username']))
+            redirect ('main/index');
+        
+        $this->user->findByUsername($_SESSION['username']);
+        
+         $this->load->view('template/_header');
+        $this->load->view('profile/index');
         $this->load->view('template/_footer');
     }
 

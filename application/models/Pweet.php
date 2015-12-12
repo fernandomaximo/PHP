@@ -38,4 +38,19 @@ class Pweet extends CI_Model{
         $this->insertDate = $insertDate;
     }
     
+    public function save(){
+        $data = array(
+            'user_id' => $this->getUserId(),
+            'content'=>  $this->getContent()
+        );
+        
+        $this->db->insert('pweet',$date);
+    }
+    
+    public function getFromUser ($userId){
+        
+        $this->db->where('user_id',$userId);
+        $result = $this->db->get('pweet');
+        return $result->result_object();
+    }
 }

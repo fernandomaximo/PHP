@@ -14,8 +14,10 @@ class Authentication extends CI_Controller{
             session_start();
             $_SESSION['username'] = $username;
             redirect('profile/show/'.$username);
+            
         }else{
             redirect('main/index');
+            
             
         }
         

@@ -31,6 +31,10 @@ class User extends CI_Model {
     function getAbout() {
         return $this->about;
     }
+    
+     function setId($id) {
+        $this->id = $id;
+    }
 
     function setUsername($username) {
         $this->username = $username;
@@ -54,7 +58,7 @@ class User extends CI_Model {
         $result = $this->db->get('user');
         $result = $result->row();
 
-
+        $this->id=$result->id;
         $this->setUsername($result->username);
         $this->setPassword($result->password);
         $this->setEmail($result->email);
@@ -92,12 +96,11 @@ class User extends CI_Model {
             'username' => $this->getUsername(),
             'password'=> $this->getPassword(),
             'email'=>  $this->getEmail(),
-            'about'=> $this->getAbout()
-                    
+            'about'=> $this->getAbout()      
         );
         
         $this->db->where('id',  $this->getId());
-        $this->db->update('user',$date);
+        $this->db->update('user',$data);
             
     
     }
